@@ -5,6 +5,7 @@ export function TodoItem({ todo }){
 
     return(
         <li>
+            <input type="checkbox"/>
             {task}
         </li>
     )
