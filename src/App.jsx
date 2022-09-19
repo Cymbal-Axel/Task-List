@@ -1,9 +1,9 @@
 import React, {Fragment, useState, useRef} from 'react';
 import { TodoList } from './components/TodoList';
-import { v4 as uuid } from 'uuid/v4';
+import { v4 as uuid } from 'uuid'
 
 export function App(){
-    const [todos, setTodos] = useState([{id: uuid, task: 'Tarea 1', completed: false}]);
+    const [todos, setTodos] = useState([{id: 1, task: 'Tarea 1', completed: false}]);
 
     const todoTaskRef = useRef();
 
@@ -14,14 +14,15 @@ export function App(){
         //Siempre que haga cambios en el estado, hacer una copia del anterior estado sino react no encontraria el dicho cambio y no va a renderizar.
         //El prevTodos paasado por parametro hace referencia al anterior estado!
         setTodos((prevTodos) => {
-            return [...prevTodos, {id, task, completed: false}]
+            return [...prevTodos, {id: uuid(), task, completed: false}]
         })
+        todoTaskRef.current.value = '';
     };
 
     return(
         <Fragment>
         <TodoList todos={todos}/>
-        
+        {/*para leer el input uso el ref */}
         <input ref={todoTaskRef} type="text" placeholder="Nueva tarea" />
         <button onClick={handleTodoAdd}>Agregar</button>
         <button>Borrar</button>
