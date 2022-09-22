@@ -2,17 +2,19 @@ import React, {Fragment, useState, useRef} from 'react';
 import { TodoList } from './components/TodoList';
 import { v4 as uuid } from 'uuid'
 
-const toggleTodo = (id) => {
-    const newTodos = [...todos];
-    const todo = newTodos.find((todo) => todo.id === id);
-    todo.completed = !todo.completed;
-    setTodos(newTodos);
-}
+
 
 export function App(){
     const [todos, setTodos] = useState([{id: 1, task: 'Tarea 1', completed: false}]);
 
     const todoTaskRef = useRef();
+
+    const toggleTodo = (id) => {
+        const newTodos = [...todos];
+        const todo = newTodos.find((todo) => todo.id === id);
+        todo.completed = !todo.completed;
+        setTodos(newTodos);
+    }
 
     const handleTodoAdd = () => {
         const task = todoTaskRef.current.value;
