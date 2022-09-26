@@ -1,11 +1,14 @@
-import React, {Fragment, useState, useRef} from 'react';
+import React, {Fragment, useState, useRef, useEffect} from 'react';
 import { TodoList } from './components/TodoList';
 import { v4 as uuid } from 'uuid'
+import { useEffect } from 'react';
 
 
 
 export function App(){
     const [todos, setTodos] = useState([{id: 1, task: 'Tarea 1', completed: false}]);
+
+    useEffect(() => {}, [todos])
 
     const todoTaskRef = useRef();
 
@@ -28,13 +31,19 @@ export function App(){
         todoTaskRef.current.value = '';
     };
 
+    const handleClearAll = () => {
+        const newTodos = todos.filter((todo) => !todo.completed);
+        setTodos(newTodos);
+    };
+
     return(
         <Fragment>
         <TodoList todos={todos} toggleTodo={toggleTodo}/>
         {/*para leer el input uso el ref */}
         <input ref={todoTaskRef} type="text" placeholder="Nueva tarea" />
         <button onClick={handleTodoAdd}>Agregar</button>
-        <button>Borrar</button>
+        <button onClick={handleClearAll}>Borrar</button>
+        <div>Te quedan {todos.filter((todo)=> !todo.completed).length} tareas por terminar</div>
         </Fragment>
     )
 }
