@@ -3,12 +3,21 @@ import { TodoList } from './components/TodoList';
 import { v4 as uuid } from 'uuid'
 import { useEffect } from 'react';
 
-
+const KEY = "todoApp.todos";
 
 export function App(){
     const [todos, setTodos] = useState([{id: 1, task: 'Tarea 1', completed: false}]);
 
-    useEffect(() => {}, [todos])
+    useEffect(() => {
+        const storedTodos = JSON.parse(localStorage.getItem(KEY));
+        if(storedTodos){
+            setTodos(storedTodos);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem(KEY,JSON.stringify(todos)) //con json stringify convierte el array a string porque localStorage solo almacena cadenas de texto
+    }, [todos]);
 
     const todoTaskRef = useRef();
 
